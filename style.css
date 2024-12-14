@@ -29,7 +29,7 @@ button {
 }
 
 #qr-content {
-  resize: both;
+  resize: vertical;
   overflow: auto;
   text-align: center;
   height: 60px;
@@ -37,6 +37,7 @@ button {
   padding: 10px;
   /* max-width: 90%; */
   width: 300px;
+  border-radius: 5px;
 }
 
 .container {
