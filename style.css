@@ -54,7 +54,7 @@ button {
   display: flex;
   margin: auto;
   /* flex-direction: row; */
-  gap: 40px;
+  gap: 30px;
 }
 
 #qr-size-slider {
