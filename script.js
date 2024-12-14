@@ -2,19 +2,23 @@ let qrCode;
 
 function updateSize() {
   // document.getElementById("qr-size-input").value = document.getElementById("qr-size-slider").value;
-  generateQR();
+  if (qrCode)
+  {
+    createQR();
+  }
 }
 
-function updateSizeSlider() {
-  document.getElementById("qr-size-slider").value = document.getElementById("qr-size-input").value;
-}
+// function updateSizeSlider() {
+//   document.getElementById("qr-size-slider").value = document.getElementById("qr-size-input").value;
+// }
 
-function generateQR() {
+function createQR() {
   const content = document.getElementById("qr-content").value;
+  if (!content) {
+    return;
+  }
   const size = parseInt(document.getElementById("qr-size-slider").value);
-  document.querySelector('#qrcode img')?.remove();
-  document.querySelector('#qrcode canvas')?.remove();
-
+  deleteQR();
   qrCode = new QRCode("qrcode", {
     text: content,
     width: size,
@@ -27,9 +31,16 @@ function generateQR() {
 
 function deleteContent() {
   document.getElementById("qr-content").value = '';
+  deleteQR();
 }
 
-function downloadQR() {
+function deleteQR() {
+  document.querySelector('#qrcode img')?.remove()
+  document.querySelector('#qrcode canvas')?.remove()
+  qrCode = null
+}
+
+function saveQR() {
   const canvas = document.querySelector('#qrcode canvas');
   if (canvas) {
     const link = document.createElement('a');
@@ -42,5 +53,5 @@ function downloadQR() {
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  generateQR();
+  createQR();
 });

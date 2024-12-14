@@ -2,10 +2,11 @@ body {
   margin: auto;
   text-align: center;
   font-family: Ubuntu;
+  min-width: 440px;
 }
 
 body, input, button, textarea {
-  font-size: large;
+  /* font-size: large; */
 }
 
 button {
@@ -22,7 +23,9 @@ button {
   flex-direction: column;
   align-items: center;
   /* padding: 20px; */
-  margin: 20px;
+  margin: 10px;
+  /* margin: auto; */
+  /* width: 100%; */
 }
 
 #qr-content {
@@ -32,9 +35,8 @@ button {
   height: 60px;
   margin: auto;
   padding: 10px;
-  max-width: 90%;
-  min-width: 200px;
-  width: 300px;
+  /* max-width: 90%; */
+  width: 320px;
 }
 
 .container {
@@ -42,19 +44,24 @@ button {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 80%;
+  padding: 20px;
+  min-width: 400px;
 }
 
 /* any direct sub elements of container */
 .container > * {
   /* padding: 10px; */
+  /* margin: 0px; */
   /* margin: 10px; */
+}
+
+h1 {
+  margin: 0px;
 }
 
 .input-container, .button-container {
   display: flex;
   margin: auto;
-  /* flex-direction: row; */
   gap: 20px;
 }
 

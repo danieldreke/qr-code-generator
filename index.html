@@ -4,7 +4,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-  <title>Offline QR Code Generator</title>
+  <title>Create QR Code Offline</title>
   <script src="qrcode.min.js"></script>
   <script src="script.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -14,17 +14,17 @@
 
 <body>
   <div class="container">
-    <h1>Offline QR Code Generator</h1>
+    <h1>Create QR Code Offline</h1>
     <textarea id="qr-content" placeholder="Enter content here">Hello World!</textarea>
     <div class="input-container">
       <input type="range" id="qr-size-slider" min="256" max="1024" value="368" step="128" oninput="updateSize()">
       <!-- <input type="number" id="qr-size-input" min="256" max="1024" value="256" oninput="updateSizeSlider()"> -->
     </div>
     <div class="button-container">
-      <button onclick="generateQR()">Generate</button>
+      <button onclick="createQR()">CREATE</button>
       <!-- <button onclick="deleteContent()">Delete Content</button> -->
-      <button onclick="downloadQR()">Download</button>
-      <button onclick="deleteContent()">Delete</button>
+      <button onclick="saveQR()">SAVE</button>
+      <button onclick="deleteContent()">DELETE</button>
     </div>
     <div id="qrcode"></div>
   </div>
