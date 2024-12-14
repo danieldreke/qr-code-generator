@@ -50,11 +50,12 @@ button {
   /* margin: 10px; */
 }
 
-/* #input-container, #button-container {
+.input-container, .button-container {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-} */
+  margin: auto;
+  /* flex-direction: row; */
+  gap: 40px;
+}
 
 #qr-size-slider {
   width: 300px;

@@ -29,6 +29,18 @@ function deleteContent() {
   document.getElementById("qr-content").value = '';
 }
 
+function downloadQR() {
+  const canvas = document.querySelector('#qrcode canvas');
+  if (canvas) {
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL();
+    link.download = 'qrcode.png';
+    link.click();
+  } else {
+    console.error('No QR code to download');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
   generateQR();
 });
