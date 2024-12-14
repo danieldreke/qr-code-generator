@@ -3,16 +3,11 @@ let qrCode;
 function updateSize() {
   const size = document.getElementById("qr-size-slider").value;
   document.getElementById("qr-size-label").textContent = `${size}px`;
-  // document.getElementById("qr-size-label").value = document.getElementById("qr-size-slider").value;
   if (qrCode)
   {
     createQR();
   }
 }
-
-// function updateSizeSlider() {
-//   document.getElementById("qr-size-slider").value = document.getElementById("qr-size-input").value;
-// }
 
 function createQR() {
   const content = document.getElementById("qr-content").value;
