@@ -1,0 +1,55 @@
+body {
+  margin: auto;
+  text-align: center;
+  font-family: Ubuntu;
+}
+
+body, input, button, textarea {
+  font-size: large;
+}
+
+button {
+  padding: 10px;
+  /* margin: 10px; */
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+#qrcode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+#qr-content {
+  resize: both;
+  width: 300px;
+  text-align: center;
+  height: 60px;
+  margin: auto;
+  padding: 10px;
+}
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 80%;
+}
+
+/* any direct sub elements of container */
+.container > * {
+  /* padding: 10px; */
+  /* margin: 10px; */
+}
+
+/* #input-container, #button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+} */

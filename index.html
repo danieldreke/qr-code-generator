@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Offline QR Code Generator</title>
+  <script src="qrcode.min.js"></script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Offline QR Code Generator</h1>
+    <textarea id="qr-content" placeholder="Enter content here">Hello World!</textarea>
+    <div class="input-container">
+      <input type="range" id="qr-size-slider" min="256" max="1024" value="256" step="128" oninput="updateSize()">
+      <!-- <input type="number" id="qr-size-input" min="256" max="1024" value="256" oninput="updateSizeSlider()"> -->
+    </div>
+    <div class="button-container">
+      <button onclick="generateQR()">Generate QR Code</button>
+      <!-- <button onclick="deleteContent()">Delete Content</button> -->
+    </div>
+    <div id="qrcode"></div>
+  </div>
+</body>
+
+</html>
