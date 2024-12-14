@@ -2,7 +2,7 @@ body {
   margin: auto;
   text-align: center;
   font-family: Ubuntu;
-  min-width: 440px;
+  min-width: 320px;
 }
 
 body, input, button, textarea {
@@ -36,7 +36,7 @@ button {
   margin: auto;
   padding: 10px;
   /* max-width: 90%; */
-  width: 320px;
+  width: 300px;
 }
 
 .container {
@@ -45,7 +45,7 @@ button {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  min-width: 400px;
+  /* min-width: 360px; */
 }
 
 /* any direct sub elements of container */
@@ -57,6 +57,7 @@ button {
 
 h1 {
   margin: 0px;
+  font-size: x-large;
 }
 
 .input-container, .button-container {
