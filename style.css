@@ -5,12 +5,11 @@ body {
 }
 
 body, input, button, textarea {
-  font-size: large;
+  font-size: larger;
 }
 
 button {
-  padding: 10px;
-  /* margin: 10px; */
+  padding: 12px 24px;
   border: none;
   border-radius: 5px;
   background-color: #4CAF50;
@@ -27,7 +26,7 @@ button {
 
 #qr-content {
   resize: both;
-  width: 300px;
+  width: 400px;
   text-align: center;
   height: 60px;
   margin: auto;
@@ -53,3 +52,7 @@ button {
   flex-direction: column;
   gap: 10px;
 } */
+
+#qr-size-slider {
+  width: 300px;
+}

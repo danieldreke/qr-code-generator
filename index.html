@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>Offline QR Code Generator</title>
   <script src="qrcode.min.js"></script>
@@ -15,7 +16,7 @@
     <h1>Offline QR Code Generator</h1>
     <textarea id="qr-content" placeholder="Enter content here">Hello World!</textarea>
     <div class="input-container">
-      <input type="range" id="qr-size-slider" min="256" max="1024" value="256" step="128" oninput="updateSize()">
+      <input type="range" id="qr-size-slider" min="256" max="1024" value="368" step="128" oninput="updateSize()">
       <!-- <input type="number" id="qr-size-input" min="256" max="1024" value="256" oninput="updateSizeSlider()"> -->
     </div>
     <div class="button-container">
