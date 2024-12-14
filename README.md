@@ -1,1 +1,1 @@
-[danieldreke.github.io ~ Offline QR Code Generator](danieldreke.github.io/qr-code-generator/)
+[danieldreke.github.io ~ Offline QR Code Generator](https://danieldreke.github.io/qr-code-generator/)
