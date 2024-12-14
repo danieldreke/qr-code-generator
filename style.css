@@ -5,7 +5,7 @@ body {
 }
 
 body, input, button, textarea {
-  font-size: larger;
+  font-size: large;
 }
 
 button {
@@ -21,7 +21,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  /* padding: 20px; */
+  margin: 20px;
 }
 
 #qr-content {
