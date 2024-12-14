@@ -28,3 +28,7 @@ function generateQR() {
 function deleteContent() {
   document.getElementById("qr-content").value = '';
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  generateQR();
+});
