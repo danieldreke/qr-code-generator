@@ -26,12 +26,14 @@ button {
 
 #qr-content {
   resize: both;
-  width: 300px;
+  overflow: auto;
   text-align: center;
   height: 60px;
   margin: auto;
   padding: 10px;
   max-width: 90%;
+  min-width: 200px;
+  width: 300px;
 }
 
 .container {
