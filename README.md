@@ -1,1 +1,1 @@
-[danieldreke.github.io ~ Offline QR Code Generator](https://danieldreke.github.io/qr-code-generator/)
+[<img src="https://raw.githubusercontent.com/danieldreke/qr-code-generator/refs/heads/master/favicon.png" width=16px /> Offline QR Code Generator ~ danieldreke.github.io](https://danieldreke.github.io/qr-code-generator/)
