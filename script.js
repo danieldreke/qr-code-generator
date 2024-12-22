@@ -1,8 +1,12 @@
 let qrCode;
 
-function updateSize() {
+function updateSizeLabel() {
   const size = document.getElementById("qr-size-slider").value;
   document.getElementById("qr-size-label").textContent = `${size}px`;
+}
+
+function updateSize() {
+  updateSizeLabel();
   if (qrCode)
   {
     createQR();
@@ -49,6 +53,15 @@ function saveQR() {
   }
 }
 
+function resetQR() {
+  deleteQR();
+  document.getElementById("qr-size-slider").value = 320;
+  updateSizeLabel();
+  document.getElementById("qr-content").value = 'Hello World!';
+  createQR();
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
   createQR();
+  document.getElementById("qr-content").addEventListener("input", createQR);
 });
