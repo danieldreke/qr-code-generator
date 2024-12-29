@@ -23,10 +23,11 @@ function createQR() {
   qrCode = new QRCode("qrcode", {
     text: content,
     width: size,
-    height: size
+    height: size,
     // colorDark : "#000000",
     // colorLight : "#ffffff",
-    // correctLevel : QRCode.CorrectLevel.H
+    correctLevel : QRCode.CorrectLevel.H  // Highest error correction
+    // correctLevel : QRCode.CorrectLevel.L  // Lowest error correction
   });
 }
 
