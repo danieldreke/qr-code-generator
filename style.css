@@ -22,26 +22,18 @@ html.dark {
   --toggle-text: #e0e0e0;
 }
 
-html, body {
-  height: 100%;
-}
-
 body {
   margin: 0;
   text-align: center;
-  font-family: Ubuntu;
-  min-width: 320px;
+  font-family: Ubuntu, sans-serif;
   background-color: var(--bg);
   color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100dvh;
   padding: 20px;
   box-sizing: border-box;
-}
-
-body, input, button, textarea {
-  /* font-size: large; */
 }
 
 button {
@@ -56,20 +48,27 @@ button {
 #dark-mode-toggle {
   background-color: var(--toggle-bg);
   color: var(--toggle-text);
-  padding: 12px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 #qrcode {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  aspect-ratio: 1;
+  border: 1px solid transparent;
 }
 
-html:not(.dark) #qrcode canvas {
-  border: 1px solid #ccc;
+html:not(.dark) #qrcode {
+  border-color: #ccc;
+}
+
+#qrcode svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
 }
 
 #qr-content {
@@ -91,23 +90,43 @@ html:not(.dark) #qrcode canvas {
   align-items: stretch;
   gap: 20px;
   padding: 30px;
-  width: fit-content;
+  width: 100%;
+  max-width: 480px;
+  box-sizing: border-box;
   background-color: var(--card);
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
 }
 
-h1 {
-  margin: 0px;
-  font-size: x-large;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.input-container, .button-container {
+h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.button-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-#qr-size-slider {
-  flex: 1;
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .container {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100svh;
+  }
 }
