@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-  <title>Create QR Code Offline</title>
+  <title>QR Code Offline Generator</title>
   <!-- https://github.com/davidshimjs/qrcodejs -->
   <!-- <script src="qrcode.min.js"></script> -->
   <!-- https://github.com/KeeeX/qrcodejs/ -->
@@ -17,17 +17,18 @@
 
 <body>
   <div class="container">
-    <h1>Create QR Code Offline</h1>
+    <h1>QR Code Offline Generator</h1>
     <textarea id="qr-content" placeholder="Enter or paste text or link here">Hello World!</textarea>
-    <div class="input-container">
-      <input type="range" id="qr-size-slider" min="128" max="1920" value="320" step="64" oninput="updateSize()">
-      <span id="qr-size-label">320px</span>
-    </div>
     <div class="button-container">
       <!-- <button onclick="createQR()">CREATE</button> -->
       <button onclick="saveQR()">SAVE</button>
+      <button onclick="deleteContent()">CLEAR</button>
       <button onclick="resetQR()">RESET</button>
-      <button onclick="deleteContent()">DELETE</button>
+      <button id="dark-mode-toggle" onclick="toggleDarkMode()"></button>
+    </div>
+    <div class="input-container">
+      <input type="range" id="qr-size-slider" min="128" max="1920" value="320" step="64" oninput="updateSize()">
+      <span id="qr-size-label">320px</span>
     </div>
     <div id="qrcode"></div>
   </div>
