@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>QR Code Offline Generator</title>
-  <!-- https://github.com/davidshimjs/qrcodejs -->
-  <!-- <script src="qrcode.min.js"></script> -->
   <!-- https://github.com/KeeeX/qrcodejs/ -->
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-  <script src="qrcode.min.keeex.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="./assets/qrcode.min.keeex.js" defer></script>
   <script src="script.js" defer></script>
   <link rel="icon" href="./favicon.png" type="image/x-icon">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#111111">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="QR Code Generator">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="./assets/icon-512.png">
 </head>
 
 <body>
@@ -38,6 +41,11 @@
     <div id="qrcode"></div>
   </div>
   <div id="toast-container"></div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./serviceworker.js');
+    }
+  </script>
 </body>
 
 </html>
