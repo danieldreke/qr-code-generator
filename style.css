@@ -52,6 +52,34 @@ button {
   cursor: pointer;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+#github-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: var(--toggle-bg);
+  color: var(--toggle-text);
+  text-decoration: none;
+}
+
+#github-link:hover {
+  opacity: 0.8;
+}
+
+#github-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
 #dark-mode-toggle {
   background-color: var(--toggle-bg);
   color: var(--toggle-text);
@@ -193,6 +221,10 @@ h1 {
 }
 
 @media (max-width: 480px) {
+  h1 {
+    font-size: 19px;
+  }
+
   body {
     padding: 0;
     align-items: stretch;
