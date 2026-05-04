@@ -60,6 +60,8 @@ button {
 }
 
 #github-link {
+  -webkit-appearance: none;
+  appearance: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,6 +70,7 @@ button {
   background-color: var(--toggle-bg);
   color: var(--toggle-text);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #github-link:hover {
