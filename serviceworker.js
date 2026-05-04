@@ -6,7 +6,6 @@ const ASSETS = [
   './script.js',
   './assets/qrcode.min.keeex.js',
   './favicon.png',
-  './favicon.svg',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './manifest.json',
