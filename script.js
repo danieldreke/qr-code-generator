@@ -1,4 +1,5 @@
 let qrCode;
+let undoStack = [];
 const SAVE_SIZE = 640;
 const QUIET_ZONE = 3;
 
@@ -56,8 +57,19 @@ function createQR() {
 }
 
 function deleteContent() {
-  document.getElementById("qr-content").value = '';
+  const textarea = document.getElementById("qr-content");
+  undoStack.push(textarea.value);
+  textarea.value = '';
+  localStorage.removeItem('qrContent');
   deleteQR();
+}
+
+function undo() {
+  if (!undoStack.length) return;
+  const textarea = document.getElementById("qr-content");
+  textarea.value = undoStack.pop();
+  localStorage.setItem('qrContent', textarea.value);
+  createQR();
 }
 
 function deleteQR() {
@@ -65,25 +77,18 @@ function deleteQR() {
   qrCode = null;
 }
 
-function saveQRsvg() {
+function getQRsvgStr() {
   const svg = document.querySelector('#qrcode svg');
-  if (!svg) { console.error('No QR code to download'); return; }
+  if (!svg) return null;
   const clone = svg.cloneNode(true);
   clone.setAttribute('width', SAVE_SIZE);
   clone.setAttribute('height', SAVE_SIZE);
   clone.setAttribute('shape-rendering', 'crispEdges');
-  const svgStr = new XMLSerializer().serializeToString(clone);
-  const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'qrcode.svg';
-  link.click();
-  URL.revokeObjectURL(url);
+  return new XMLSerializer().serializeToString(clone);
 }
 
-function saveQRpng() {
-  if (!qrCode?._oQRCode) { console.error('No QR code to download'); return; }
+function getQRcanvas() {
+  if (!qrCode?._oQRCode) return null;
   const qr = qrCode._oQRCode;
   const n = qr.getModuleCount();
   const total = n + QUIET_ZONE * 2;
@@ -100,14 +105,78 @@ function saveQRpng() {
     for (let col = 0; col < n; col++)
       if (qr.isDark(row, col))
         ctx.fillRect((col + QUIET_ZONE) * mod, (row + QUIET_ZONE) * mod, mod, mod);
+  return canvas;
+}
+
+function saveQRsvg() {
+  const svgStr = getQRsvgStr();
+  if (!svgStr) { console.error('No QR code to download'); return; }
+  const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'qrcode.svg';
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function saveQRpng() {
+  const canvas = getQRcanvas();
+  if (!canvas) { console.error('No QR code to download'); return; }
   const link = document.createElement('a');
   link.href = canvas.toDataURL('image/png');
   link.download = 'qrcode.png';
   link.click();
 }
 
+async function copyQRsvg() {
+  const svgStr = getQRsvgStr();
+  if (!svgStr) return;
+  await navigator.clipboard.writeText(svgStr);
+  showToast('QR code copied as SVG to clipboard');
+}
+
+async function copyQRpng() {
+  const canvas = getQRcanvas();
+  if (!canvas) return;
+  canvas.toBlob(async (blob) => {
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    showToast('QR code copied as PNG to clipboard');
+  });
+}
+
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.getElementById('toast-container').appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+
+function toggleMenu(e) {
+  e.stopPropagation();
+  const dropdown = document.getElementById('menu-dropdown');
+  dropdown.hidden = !dropdown.hidden;
+}
+
+function closeMenu() {
+  document.getElementById('menu-dropdown').hidden = true;
+}
+
+document.addEventListener('click', () => closeMenu());
+
 document.addEventListener('DOMContentLoaded', () => {
   applyStoredTheme();
+  const textarea = document.getElementById("qr-content");
+  const saved = localStorage.getItem('qrContent');
+  if (saved !== null) textarea.value = saved;
+  else textarea.value = 'Hello World!';
   createQR();
-  document.getElementById("qr-content").addEventListener("input", createQR);
+  let previousValue = textarea.value;
+  textarea.addEventListener("input", () => {
+    undoStack.push(previousValue);
+    previousValue = textarea.value;
+    localStorage.setItem('qrContent', textarea.value);
+    createQR();
+  });
 });

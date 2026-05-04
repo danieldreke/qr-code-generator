@@ -21,14 +21,23 @@
       <h1>QR Code Offline Generator</h1>
       <button id="dark-mode-toggle" onclick="toggleDarkMode()"></button>
     </div>
-    <textarea id="qr-content" placeholder="Enter or paste text or link here">Hello World!</textarea>
+    <textarea id="qr-content" placeholder="Enter or paste text or link here"></textarea>
     <div class="button-container">
-      <button onclick="saveQRpng()">SAVE PNG</button>
-      <button onclick="saveQRsvg()">SAVE SVG</button>
       <button onclick="deleteContent()">CLEAR</button>
+      <button onclick="undo()">UNDO</button>
+      <button onclick="saveQRpng()">SAVE PNG</button>
+      <div class="menu-wrapper">
+        <button id="menu-btn" onclick="toggleMenu(event)">&#xFE19;</button>
+        <div id="menu-dropdown" class="menu-dropdown" hidden>
+          <button onclick="copyQRsvg(); closeMenu()">COPY SVG</button>
+          <button onclick="copyQRpng(); closeMenu()">COPY PNG</button>
+          <button onclick="saveQRsvg(); closeMenu()">SAVE SVG</button>
+        </div>
+      </div>
     </div>
     <div id="qrcode"></div>
   </div>
+  <div id="toast-container"></div>
 </body>
 
 </html>
