@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>QR Code Offline Generator</title>
-  <!-- https://github.com/KeeeX/qrcodejs/ -->
   <link rel="stylesheet" href="style.css">
-  <script src="./assets/qrcode.min.keeex.js" defer></script>
+  <script src="./qrcodegen-nayuki.js" defer></script>
   <script src="script.js" defer></script>
   <link rel="icon" href="./favicon.png" type="image/x-icon">
   <link rel="manifest" href="./manifest.json">
@@ -29,7 +28,13 @@
         <button id="dark-mode-toggle" onclick="toggleDarkMode()"></button>
       </div>
     </div>
-    <textarea id="qr-content" placeholder="Enter or paste text or link here"></textarea>
+    <div class="textarea-wrapper">
+      <textarea id="qr-content" placeholder="Enter or paste text or link here"></textarea>
+      <div class="capacity-row">
+        <div class="capacity-track"><div id="capacity-bar"></div></div>
+        <span id="capacity-remaining"></span>
+      </div>
+    </div>
     <div class="button-container">
       <button onclick="deleteContent()">CLEAR</button>
       <button onclick="undo()">UNDO</button>
@@ -43,7 +48,12 @@
         </div>
       </div>
     </div>
-    <div id="qrcode"></div>
+    <div id="qrcode">
+      <div id="qr-error" hidden>
+        <span id="qr-error-icon">&#x2715;</span>
+        <span>Text too long for a QR code</span>
+      </div>
+    </div>
   </div>
   <div id="toast-container"></div>
   <script>

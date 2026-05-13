@@ -2,6 +2,8 @@ let qrCode;
 let undoStack = [];
 const SAVE_SIZE = 640;
 const QUIET_ZONE = 3;
+const CAPACITY_WARN = 0.80;
+const CAPACITY_CRITICAL = 0.95;
 
 const SVG_SUN = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="12" cy="12" r="5"/>
@@ -34,26 +36,37 @@ function applyStoredTheme() {
 
 function createQR() {
   const content = document.getElementById("qr-content").value;
+  updateCapacityWarning(content);
   if (!content) return;
   deleteQR();
-  qrCode = new QRCode("qrcode", {
-    text: content,
-    correctLevel: QRCode.CorrectLevel.H,
-    useSVG: true
-  });
-  const svg = document.querySelector('#qrcode svg');
-  if (svg) {
-    const n = parseInt(svg.getAttribute('viewBox').split(' ')[2]);
-    const total = n + QUIET_ZONE * 2;
-    svg.setAttribute('viewBox', `${-QUIET_ZONE} ${-QUIET_ZONE} ${total} ${total}`);
-    svg.setAttribute('width', '100%');
-    svg.removeAttribute('height');
-    const bgRect = svg.querySelector('rect');
-    bgRect.setAttribute('x', -QUIET_ZONE);
-    bgRect.setAttribute('y', -QUIET_ZONE);
-    bgRect.setAttribute('width', total);
-    bgRect.setAttribute('height', total);
+  try {
+    qrCode = qrcodegen.QrCode.encodeText(content, qrcodegen.QrCode.Ecc.HIGH);
+  } catch (e) {
+    document.getElementById('qr-error').hidden = false;
+    return;
   }
+  const n = qrCode.size;
+  const total = n + QUIET_ZONE * 2;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', `${-QUIET_ZONE} ${-QUIET_ZONE} ${total} ${total}`);
+  svg.setAttribute('width', '100%');
+  const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  bg.setAttribute('x', -QUIET_ZONE);
+  bg.setAttribute('y', -QUIET_ZONE);
+  bg.setAttribute('width', total);
+  bg.setAttribute('height', total);
+  bg.setAttribute('fill', '#ffffff');
+  svg.appendChild(bg);
+  let d = '';
+  for (let y = 0; y < n; y++)
+    for (let x = 0; x < n; x++)
+      if (qrCode.getModule(x, y))
+        d += `M${x},${y}h1v1h-1z`;
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('fill', '#000000');
+  svg.appendChild(path);
+  document.getElementById('qrcode').appendChild(svg);
 }
 
 function deleteContent() {
@@ -62,6 +75,7 @@ function deleteContent() {
   textarea.value = '';
   localStorage.removeItem('qrContent');
   deleteQR();
+  updateCapacityWarning('');
 }
 
 function undo() {
@@ -74,7 +88,23 @@ function undo() {
 
 function deleteQR() {
   document.querySelector('#qrcode svg')?.remove();
+  document.getElementById('qr-error').hidden = true;
   qrCode = null;
+}
+
+function updateCapacityWarning(content) {
+  const ecl = qrcodegen.QrCode.Ecc.HIGH;
+  const maxBits = qrcodegen.QrCode.getNumDataCodewords(40, ecl) * 8;
+  const segs = content ? qrcodegen.QrSegment.makeSegments(content) : [];
+  const usedBits = qrcodegen.QrSegment.getTotalBits(segs, 40);
+  const ratio = usedBits / maxBits;
+  const bar = document.getElementById('capacity-bar');
+  bar.style.width = `${(Math.min(ratio, 1) * 100).toFixed(1)}%`;
+  bar.dataset.level = ratio >= CAPACITY_CRITICAL ? 'critical' : ratio >= CAPACITY_WARN ? 'warn' : 'ok';
+  const remaining = document.getElementById('capacity-remaining');
+  const charsLeft = Math.floor((maxBits - usedBits) / 8);
+  remaining.dataset.level = bar.dataset.level;
+  remaining.textContent = `${charsLeft} chars left`;
 }
 
 function getQRsvgStr() {
@@ -88,9 +118,8 @@ function getQRsvgStr() {
 }
 
 function getQRcanvas() {
-  if (!qrCode?._oQRCode) return null;
-  const qr = qrCode._oQRCode;
-  const n = qr.getModuleCount();
+  if (!qrCode) return null;
+  const n = qrCode.size;
   const total = n + QUIET_ZONE * 2;
   const mod = Math.floor(SAVE_SIZE / total);
   const size = mod * total;
@@ -101,10 +130,10 @@ function getQRcanvas() {
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, size, size);
   ctx.fillStyle = '#000000';
-  for (let row = 0; row < n; row++)
-    for (let col = 0; col < n; col++)
-      if (qr.isDark(row, col))
-        ctx.fillRect((col + QUIET_ZONE) * mod, (row + QUIET_ZONE) * mod, mod, mod);
+  for (let y = 0; y < n; y++)
+    for (let x = 0; x < n; x++)
+      if (qrCode.getModule(x, y))
+        ctx.fillRect((x + QUIET_ZONE) * mod, (y + QUIET_ZONE) * mod, mod, mod);
   return canvas;
 }
 
