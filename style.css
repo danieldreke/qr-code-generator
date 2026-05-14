@@ -14,7 +14,8 @@
 
 :root {
   --space: 3vw;
-  --app-width: calc(100vw - 2 * var(--space));
+  --space-desktop: 16px;
+  --max-width: 45vh;
   --bg: #f5f5f5;
   --card: #f5f5f5;
   --text: #1a1a1a;
@@ -27,8 +28,8 @@
 }
 
 html.dark {
-  --bg: #1a1a1a;
-  --card: #1a1a1a;
+  --bg: #111111;
+  --card: #222222;
   --text: #ffffff;
   --textarea-bg: #2d2d2d;
   --textarea-border: #555;
@@ -47,7 +48,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100dvh;
+  min-height: 100dvh;
   box-sizing: border-box;
 }
 
@@ -197,14 +198,14 @@ html.dark #capacity-remaining {
   flex-direction: column;
   align-items: stretch;
   gap: var(--space);
-  padding: var(--space) 0;
-  width: var(--app-width);
-  max-width: var(--app-width);
+  padding: var(--space);
+  width: var(--max-width);
+  max-width: var(--max-width);
+  height: 95vh;
   box-sizing: border-box;
   background-color: var(--card);
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-  align-self: stretch;
 }
 
 .header {
@@ -224,7 +225,6 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: var(--space);
-  padding: 0 var(--space);
 }
 
 
@@ -306,8 +306,23 @@ html.dark .toast {
     font-size: 19px;
   }
 
+  body {
+    height: 100dvh;
+    align-items: stretch;
+  }
+
   .container {
     border-radius: 0;
     box-shadow: none;
+    flex: 1;
+    width: auto;
+    max-width: none;
+    height: 100dvh;
+  }
+}
+
+@media (min-width: 481px) {
+  :root {
+    --space: var(--space-desktop);
   }
 }
