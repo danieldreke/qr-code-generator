@@ -1,4 +1,4 @@
-const CACHE = 'qr-gen-v9';
+const CACHE = 'qr-gen-v10';
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const ASSETS = [
   './assets/icon-512.png',
   './manifest.json',
   './assets/fonts/ubuntu-400-latin.woff2',
+  './assets/fonts/ubuntu-mono-400-latin.woff2',
 ];
 
 self.addEventListener('install', e => {

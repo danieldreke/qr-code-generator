@@ -1,9 +1,10 @@
 let qrCode;
 let undoStack = [];
+let redoStack = [];
+let previousValue = '';
 const SAVE_SIZE = 640;
 const QUIET_ZONE = 3;
-const CAPACITY_WARN = 0.80;
-const CAPACITY_CRITICAL = 0.95;
+const CAPACITY_WARN = 0.95;
 
 const SVG_SUN = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="12" cy="12" r="5"/>
@@ -35,6 +36,7 @@ function applyStoredTheme() {
 }
 
 function createQR() {
+  document.getElementById('qr-error').hidden = true;
   const content = document.getElementById("qr-content").value;
   updateCapacityWarning(content);
   if (!content) return;
@@ -42,7 +44,7 @@ function createQR() {
   try {
     qrCode = qrcodegen.QrCode.encodeText(content, qrcodegen.QrCode.Ecc.HIGH);
   } catch (e) {
-    document.getElementById('qr-error').hidden = false;
+    // document.getElementById('qr-error').hidden = false;
     return;
   }
   const n = qrCode.size;
@@ -72,7 +74,9 @@ function createQR() {
 function deleteContent() {
   const textarea = document.getElementById("qr-content");
   undoStack.push(textarea.value);
+  redoStack = [];
   textarea.value = '';
+  previousValue = '';
   localStorage.removeItem('qrContent');
   deleteQR();
   updateCapacityWarning('');
@@ -81,7 +85,19 @@ function deleteContent() {
 function undo() {
   if (!undoStack.length) return;
   const textarea = document.getElementById("qr-content");
+  redoStack.push(textarea.value);
   textarea.value = undoStack.pop();
+  previousValue = textarea.value;
+  localStorage.setItem('qrContent', textarea.value);
+  createQR();
+}
+
+function redo() {
+  if (!redoStack.length) return;
+  const textarea = document.getElementById("qr-content");
+  undoStack.push(textarea.value);
+  textarea.value = redoStack.pop();
+  previousValue = textarea.value;
   localStorage.setItem('qrContent', textarea.value);
   createQR();
 }
@@ -100,11 +116,22 @@ function updateCapacityWarning(content) {
   const ratio = usedBits / maxBits;
   const bar = document.getElementById('capacity-bar');
   bar.style.width = `${(Math.min(ratio, 1) * 100).toFixed(1)}%`;
-  bar.dataset.level = ratio >= CAPACITY_CRITICAL ? 'critical' : ratio >= CAPACITY_WARN ? 'warn' : 'ok';
   const remaining = document.getElementById('capacity-remaining');
   const charsLeft = Math.floor((maxBits - usedBits) / 8);
-  remaining.dataset.level = bar.dataset.level;
-  remaining.textContent = `${charsLeft} chars left`;
+  let level;
+  if (charsLeft < 0) {
+    const tooMany = Math.ceil((usedBits - maxBits) / 8);
+    remaining.textContent = `Text is too long. Remove ${tooMany} ${tooMany === 1 ? 'char' : 'chars'}.`;
+    level = 'critical';
+  } else if (charsLeft === 0) {
+    remaining.textContent = `0 chars left`;
+    level = 'warn';
+  } else {
+    remaining.textContent = `${charsLeft} chars left`;
+    level = ratio >= CAPACITY_WARN ? 'warn' : 'ok';
+  }
+  bar.dataset.level = level;
+  remaining.dataset.level = level;
 }
 
 function getQRsvgStr() {
@@ -201,9 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (saved !== null) textarea.value = saved;
   else textarea.value = 'Hello World!';
   createQR();
-  let previousValue = textarea.value;
+  previousValue = textarea.value;
   textarea.addEventListener("input", () => {
     undoStack.push(previousValue);
+    redoStack = [];
     previousValue = textarea.value;
     localStorage.setItem('qrContent', textarea.value);
     createQR();

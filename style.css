@@ -5,26 +5,35 @@
   src: url('./assets/fonts/ubuntu-400-latin.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/ubuntu-mono-400-latin.woff2') format('woff2');
+}
+
 :root {
-  --bg: #f0f0f0;
-  --card: #ffffff;
-  --text: #000000;
-  --textarea-bg: #f7f7f7;
-  --textarea-border: #ccc;
-  --btn-bg: #4CAF50;
+  --space: 3vw;
+  --app-width: calc(100vw - 2 * var(--space));
+  --bg: #f5f5f5;
+  --card: #f5f5f5;
+  --text: #1a1a1a;
+  --textarea-bg: #ececec;
+  --textarea-border: #bbb;
+  --btn-bg: #388e3c;
   --btn-text: #ffffff;
-  --toggle-bg: #e0e0e0;
-  --toggle-text: #555;
+  --toggle-bg: #d5d5d5;
+  --toggle-text: #444;
 }
 
 html.dark {
-  --bg: #111111;
+  --bg: #1a1a1a;
   --card: #1a1a1a;
-  --text: #e0e0e0;
+  --text: #ffffff;
   --textarea-bg: #2d2d2d;
   --textarea-border: #555;
   --btn-bg: #2e7d32;
-  --btn-text: #e0e0e0;
+  --btn-text: #ffffff;
   --toggle-bg: #333;
   --toggle-text: #e0e0e0;
 }
@@ -38,8 +47,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100dvh;
-  padding: 20px;
+  height: 100dvh;
   box-sizing: border-box;
 }
 
@@ -55,7 +63,7 @@ button {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space);
   flex-shrink: 0;
 }
 
@@ -96,10 +104,11 @@ button {
 #qrcode {
   position: relative;
   aspect-ratio: 1;
-  border: 1px solid transparent;
+  border: 1px solid var(--textarea-border);
 }
 
 #qr-error {
+  display: none;
   position: absolute;
   inset: 0;
   display: flex;
@@ -118,9 +127,6 @@ button {
   font-size: 0.85rem;
 }
 
-html:not(.dark) #qrcode {
-  border-color: #ccc;
-}
 
 #qrcode svg {
   display: block;
@@ -131,18 +137,25 @@ html:not(.dark) #qrcode {
 
 .textarea-wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 #qr-content {
   display: block;
   width: 100%;
-  resize: vertical;
+  flex: 1;
+  min-height: 0;
+  resize: none;
   overflow: auto;
   text-align: center;
-  height: 100px;
-  padding: 10px;
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  padding: calc(var(--space) / 2);
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   background-color: var(--textarea-bg);
   color: var(--text);
   border: 1px solid var(--textarea-border);
@@ -154,34 +167,42 @@ html:not(.dark) #qrcode {
 
 .capacity-row {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .capacity-track {
-  flex: 1;
-  height: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.1rem;
   border: 1px solid var(--textarea-border);
-  /* border: 2px solid white; */
-  border-radius: 3px;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
   overflow: hidden;
 }
 
 #capacity-remaining {
-  width: 5rem;
-  flex-shrink: 0;
-  font-size: 0.7rem;
+  position: relative;
+  z-index: 1;
+  padding: 0 4px;
+  font-size: 0.85rem;
   white-space: nowrap;
-  text-align: right;
-  opacity: 0.7;
+  color: #222;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
-#capacity-remaining[data-level="ok"]       { color: #22c55e; }
-#capacity-remaining[data-level="warn"]     { color: #f59e0b; }
-#capacity-remaining[data-level="critical"] { color: #dc2626; }
+html.dark #capacity-remaining {
+  color: #fff;
+  text-shadow: -1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555, 1px 1px 0 #555;
+}
 
 #capacity-bar {
-  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 0;
   transition: width 0.15s, background-color 0.3s;
 }
@@ -194,21 +215,22 @@ html:not(.dark) #qrcode {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 20px;
-  padding: 30px;
-  width: 100%;
-  max-width: 480px;
+  gap: var(--space);
+  padding: var(--space) 0;
+  width: var(--app-width);
+  max-width: var(--app-width);
   box-sizing: border-box;
   background-color: var(--card);
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  align-self: stretch;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space);
 }
 
 h1 {
@@ -220,7 +242,12 @@ h1 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space);
+  padding: 0 var(--space);
+}
+
+#menu-btn {
+  display: none;
 }
 
 .menu-wrapper {
@@ -296,27 +323,8 @@ h1 {
     font-size: 19px;
   }
 
-  body {
-    padding: 0;
-    align-items: stretch;
-    height: 100dvh;
-    overflow: hidden;
-  }
-
   .container {
-    max-width: 100%;
     border-radius: 0;
     box-shadow: none;
-  }
-
-  #qrcode {
-    flex: 1;
-    min-height: 0;
-    aspect-ratio: unset;
-    border: none !important;
-  }
-
-  #qrcode svg {
-    height: auto;
   }
 }
