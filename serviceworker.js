@@ -1,4 +1,4 @@
-const CACHE = 'qr-gen-v11';
+const CACHE = 'qr-gen-v12';
 const ASSETS = [
   './',
   './index.html',

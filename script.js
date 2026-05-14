@@ -36,7 +36,6 @@ function applyStoredTheme() {
 }
 
 function createQR() {
-  document.getElementById('qr-error').hidden = true;
   const content = document.getElementById("qr-content").value;
   updateCapacityWarning(content);
   if (!content) return;
@@ -44,7 +43,6 @@ function createQR() {
   try {
     qrCode = qrcodegen.QrCode.encodeText(content, qrcodegen.QrCode.Ecc.HIGH);
   } catch (e) {
-    // document.getElementById('qr-error').hidden = false;
     return;
   }
   const n = qrCode.size;
@@ -104,7 +102,6 @@ function redo() {
 
 function deleteQR() {
   document.querySelector('#qrcode svg')?.remove();
-  document.getElementById('qr-error').hidden = true;
   qrCode = null;
 }
 

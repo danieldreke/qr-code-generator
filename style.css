@@ -107,25 +107,6 @@ button {
   border: 1px solid var(--textarea-border);
 }
 
-#qr-error {
-  display: none;
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  opacity: 0.45;
-}
-
-#qr-error-icon {
-  font-size: 2rem;
-}
-
-#qr-error span:last-child {
-  font-size: 0.85rem;
-}
 
 
 #qrcode svg {
