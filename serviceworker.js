@@ -1,10 +1,10 @@
-const CACHE = 'qr-gen-v14';
+const CACHE = 'qr-gen-v15';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './script.js',
-  './qrcodegen-nayuki.js',
+  './assets/qrcodegen-nayuki.js',
   './favicon.png',
   './assets/icon-192.png',
   './assets/icon-512.png',
