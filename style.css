@@ -246,9 +246,6 @@ h1 {
   padding: 0 var(--space);
 }
 
-#menu-btn {
-  display: none;
-}
 
 .menu-wrapper {
   position: relative;
@@ -288,7 +285,7 @@ h1 {
 
 #toast-container {
   position: fixed;
-  bottom: 24px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -302,6 +299,7 @@ h1 {
 .toast {
   background-color: #2e7d32;
   color: #ffffff;
+  border: 1px solid var(--textarea-border);
   padding: 10px 20px;
   border-radius: 20px;
   font-size: 14px;
@@ -316,6 +314,10 @@ h1 {
 
 @keyframes toast-out {
   to { opacity: 0; transform: translateY(8px); }
+}
+
+html.dark .toast {
+  border-color: #aaa;
 }
 
 @media (max-width: 480px) {

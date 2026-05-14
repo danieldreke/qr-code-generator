@@ -41,14 +41,6 @@
       <button onclick="deleteContent()">CLEAR</button>
       <button onclick="undo()">UNDO</button>
       <button onclick="redo()">REDO</button>
-      <div class="menu-wrapper">
-        <button id="menu-btn" onclick="toggleMenu(event)">&#xFE19;</button>
-        <div id="menu-dropdown" class="menu-dropdown" hidden>
-          <button onclick="copyQRsvg(); closeMenu()">COPY SVG</button>
-          <button onclick="copyQRpng(); closeMenu()">COPY PNG</button>
-          <button onclick="saveQRsvg(); closeMenu()">SAVE SVG</button>
-        </div>
-      </div>
     </div>
     <div id="qrcode">
       <div id="qr-error">
@@ -59,6 +51,13 @@
     <div class="button-container">
       <button onclick="copyQRpng()">COPY QR</button>
       <button onclick="saveQRpng()">SAVE QR</button>
+      <div class="menu-wrapper">
+        <button id="menu-btn" onclick="toggleMenu(event)">&#xFE19;</button>
+        <div id="menu-dropdown" class="menu-dropdown" hidden>
+          <button onclick="copyQRsvg(); closeMenu()">COPY QR AS SVG</button>
+          <button onclick="saveQRsvg(); closeMenu()">SAVE QR AS SVG</button>
+        </div>
+      </div>
     </div>
   </div>
   <div id="toast-container"></div>
