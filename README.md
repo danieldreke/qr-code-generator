@@ -6,6 +6,8 @@ An offline QR code generator that runs locally in your browser and can be instal
 
 Open [QR Code Offline Generator](https://danieldreke.github.io/qr-code-generator/)
 
+![alt text](images/screenshot-01.png) ![alt text](images/image.png)
+
 ## Features
 
 - Generate QR codes from any text or URL
