@@ -6,7 +6,9 @@ An offline QR code generator that runs locally in your browser and can be instal
 
 Open [QR Code Offline Generator](https://danieldreke.github.io/qr-code-generator/)
 
-![Screenshot 01](images/screenshot-01.png) ![Screenshot 02](images/screenshot-02.png)
+Pure Markdown can't set image widths. Use HTML instead:
+
+<img src="images/screenshot-01.png" width="49%"> <img src="images/screenshot-02.png" width="49%">
 
 ## Features
 
